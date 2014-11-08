@@ -4,11 +4,29 @@ SYMLINKS=".bash_profile .bashrc .bash_profile.d .bashrc.d .aliases.d"
 
 test() {
     create_symlinks
+    echo -en "\033[0;31m"
+    cat <<EOF
+
+===============================
+== ENTERING TEST ENVIRONMENT ==
+===============================
+
+EOF
+    echo -en "\033[0;0m"
     env -i \
         TERM=xterm \
         PATH=$PATH \
         HOME=$HOME \
     /bin/bash --rcfile .bash_profile
+    echo -en "\033[0;32m"
+    cat <<EOF
+
+==============================
+== LEAVING TEST ENVIRONMENT ==
+==============================
+
+EOF
+    echo -en "\033[0;0m"
 }
 
 create_symlinks() {
