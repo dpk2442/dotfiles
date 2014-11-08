@@ -1,0 +1,12 @@
+# If we're not on Linux, return
+[ "$(uname)" = "Linux" ] || return
+
+
+###########################
+## Set up pbcopy/pbpaste ##
+###########################
+
+if which xsel 1>/dev/null 2>&1; then
+    alias pbcopy='xsel --clipboard'
+    alias pbpaste='xsel --clipboard'
+fi

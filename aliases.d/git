@@ -1,0 +1,11 @@
+binaryExists() {
+    which $1 1>/dev/null 2>&1
+}
+
+# If git isn't installed, return
+binaryExists git || return
+
+alias st='git status'
+binaryExists git-branch-status && alias bs='git branch-status'
+
+unset binaryExists

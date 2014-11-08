@@ -1,0 +1,10 @@
+# If we're not on OS X, return
+[ "$(uname)" = "Darwin" ] || return
+
+
+####################
+## Tab Completion ##
+####################
+
+SSH_COMPLETE=( $(cat ~/.ssh/config | grep -v '*' | grep "Host " | cut -d' ' -f2) )
+complete -W "${SSH_COMPLETE[*]}" ssh

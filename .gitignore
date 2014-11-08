@@ -1,0 +1,16 @@
+# symlinks
+.bash_profile
+.bash_profile.d
+.bashrc
+.bashrc.d
+.aliases.d
+
+# ignore most .d folder contents
+bash_profile.d/*
+bashrc.d/*
+aliases.d/*
+
+# except specific scripts
+!bashrc.d/darwin
+!bashrc.d/linux
+!aliases.d/git
