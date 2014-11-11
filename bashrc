@@ -65,17 +65,17 @@ fi
 ## Other includes ##
 ####################
 
-# Include all additional bashrc parts
+# Include all additional executable bashrc parts
 if [ -d .bashrc.d ]; then
     for file in .bashrc.d/*; do
-        [ -f $file ] && source $file
+        [ -x $file ] && source $file
     done
 fi
 
-# Include all alias definitions
+# Include all executable alias definitions
 if [ -d .aliases.d ]; then
     for file in .aliases.d/*; do
-        [ -f $file ] && source $file
+        [ -x $file ] && source $file
     done
 fi
 
