@@ -3,7 +3,7 @@
 SYMLINKS=".bash_profile .bashrc .bash_profile.d .bashrc.d .aliases.d"
 
 test() {
-    create_symlinks
+    create_test_symlinks
     echo -en "\033[0;31m"
     cat <<EOF
 
@@ -28,16 +28,53 @@ EOF
     echo -en "\033[0;0m"
 }
 
-create_symlinks() {
+create_test_symlinks() {
     for symlink in $SYMLINKS; do
         target=${symlink:1}
         [ ! -L $symlink ] && [ -e $target ] && ln -s $target $symlink
     done
 }
 
-delete_symlinks() {
+delete_test_symlinks() {
     for symlink in $SYMLINKS; do
         [ -L $symlink ] && rm $symlink
+    done
+}
+
+install() {
+    repo="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    cd "$HOME"
+    for symlink in $SYMLINKS; do
+        echo -n "Creating link for $symlink... "
+        if [ -f $symlink ]; then
+            echo "File already exists. Moving to $symlink.backup"
+            mv $symlink $symlink.backup
+        fi
+        target="$repo/${symlink:1}"
+        if [ -e "$target" ]; then
+            ln -s "$target" $symlink
+            echo "Link created!"
+        else
+            echo "Target $target does not exist, skipping."
+        fi
+    done
+}
+
+uninstall() {
+    repo="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    cd "$HOME"
+    for symlink in $SYMLINKS; do
+        echo -n "Checking $symlink... "
+        if [ -f $symlink.backup ]; then
+            echo "Backup file found. Restoring $symlink.backup."
+            mv $symlink.backup $symlink
+        elif [ -L $symlink ]; then
+            echo "$symlink is a symbolic link. Removing."
+            rm $symlink
+        else
+            echo "No backup file found, and $symlink isn't a symbolic link. Leaving $symlink."
+        fi
+        echo "Link removed!"
     done
 }
 
