@@ -34,6 +34,19 @@ export PS1="\\[\033[0;32m\\]\u@\h:\$(shortPWD)\$(git_bash)\$ \\[\033[0;36m\\]"
 trap 'echo -ne "\033[0;0m"' DEBUG
 
 
+########################
+## Path configuration ##
+########################
+
+# Personal bin folder
+PATH="$PATH:$HOME/bin"
+
+# Current directory
+PATH="$PATH:."
+
+export PATH
+
+
 ##############################
 ## Generally useful aliases ##
 ##############################

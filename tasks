@@ -15,7 +15,6 @@ EOF
     echo -en "\033[0;0m"
     env -i \
         TERM=xterm \
-        PATH=$PATH \
         HOME=$HOME \
     /bin/bash --rcfile .bash_profile
     echo -en "\033[0;32m"
