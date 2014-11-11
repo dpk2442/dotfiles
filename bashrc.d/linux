@@ -1,5 +1,5 @@
 # If we're not on Linux, return
-[ "$(uname)" = "Linux" ] || return
+isLinux || return
 
 
 ###########################

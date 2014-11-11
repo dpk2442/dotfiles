@@ -1,6 +1,11 @@
 # If bash is not running interactively, exit
 [[ $- == *i* ]] || exit
 
+# os detection functions
+platform=$(uname)
+isDarwin() { [ "$platform" = "Darwin" ]; }
+isLinux() { [ "$platform" = "Linux" ]; }
+
 
 #########
 ## PS1 ##
@@ -34,14 +39,27 @@ trap 'echo -ne "\033[0;0m"' DEBUG
 ##############################
 
 # Colorize ls
-[ "$(uname)" = "Linux" ]  && alias ls='ls --color=auto'
-[ "$(uname)" = "Darwin" ] && alias ls='ls -G'
+isLinux && alias ls='ls --color=auto'
+isDarwin && alias ls='ls -G'
 
 # Awesome long listing format
 alias ll='ls -alhF'
 
 # Use rsync to copy files with a progress bar
 alias rsynccp='rsync -a --stats --progress'
+
+# pman - view man pages visually
+if isLinux; then
+    pman() {
+        t=$(mktemp)
+        man -t "$@" > $t
+        xdg-open $t
+    }
+elif isDarwin; then
+    pman() {
+        man -t "$@" | open -f -a Preview
+    }
+fi
 
 ####################
 ## Other includes ##
@@ -60,3 +78,7 @@ if [ -d .aliases.d ]; then
         [ -f $file ] && source $file
     done
 fi
+
+unset platform
+unset isLinux
+unset isDarwin
