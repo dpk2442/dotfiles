@@ -7,6 +7,35 @@ isDarwin() { [ "$platform" = "Darwin" ]; }
 isLinux() { [ "$platform" = "Linux" ]; }
 
 
+#############
+## History ##
+#############
+
+# don't put duplicate lines or lines starting with space in the history.
+# See bash(1) for more options
+HISTCONTROL=ignoreboth
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=1000
+HISTFILESIZE=2000
+
+
+###########################
+## General bash settings ##
+###########################
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+
+# If set, the pattern "**" used in a pathname expansion context will
+# match all files and zero or more directories and subdirectories.
+shopt -s globstar
+
+
 #########
 ## PS1 ##
 #########
@@ -30,7 +59,7 @@ git_bash() {
     fi
 }
 
-export PS1="\\[\033[0;32m\\]\u@\h:\$(shortPWD)\$(git_bash)\$ \\[\033[0;36m\\]"
+export PS1="\\[\033[0;32m\\]\u@\h:\$(shortPWD)\[\033[0;34m\]\$(git_bash)\[\033[0;32m\]\$ \\[\033[0;36m\\]"
 trap 'echo -ne "\033[0;0m"' DEBUG
 
 
@@ -55,6 +84,9 @@ export PATH
 isLinux && alias ls='ls --color=auto'
 isDarwin && alias ls='ls -G'
 
+# Colorize grep
+alias grep='grep --color=auto'
+
 # Awesome long listing format
 alias ll='ls -alhF'
 
@@ -73,6 +105,10 @@ elif isDarwin; then
         man -t "$@" | open -f -a Preview
     }
 fi
+
+# Terminal tab and editor settings
+which tabs 1>/dev/null 2>&1 && tabs -4 >/dev/null
+export EDITOR=vim
 
 ####################
 ## Other includes ##
