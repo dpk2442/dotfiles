@@ -110,6 +110,22 @@ fi
 which tabs 1>/dev/null 2>&1 && tabs -4 >/dev/null
 export EDITOR=vim
 
+# Copy current working directory to clipboard
+alias copypwd="pwd | tr --delete '\n' | pbcopy"
+
+# Use rsync for copying files
+alias rsynccp='rsync -a --stats --progress'
+
+# Search for processes
+psgrep() {
+    ps aux | grep "[${1:0:1}]${1:1}"
+}
+
+# Get a list of process ids
+pfind() {
+    psgrep "$1" | awk '{print $2}';
+}
+
 ####################
 ## Other includes ##
 ####################
