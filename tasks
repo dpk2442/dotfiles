@@ -1,6 +1,47 @@
 #!/bin/bash
 
-SYMLINKS=".bash_profile .bashrc .bash_profile.d .bashrc.d .aliases.d"
+TEST_SYMLINKS=".bash_profile .bashrc .bash_profile.d .bashrc.d .aliases.d"
+INSTALL_FILES="bash_profile bashrc"
+INSTALL_DIRECTORIES="bash_profile.d bashrc.d aliases.d"
+
+
+###############
+## Utilities ##
+###############
+
+_linkFile() {
+    sourceFile="$1"
+    destinationFile="$2"
+    if [ -z "$sourceFile" -o -z "$destinationFile" ]; then
+        return
+    fi
+    echo "Attempting to link $destinationFile"
+    if [ -e "$destinationFile" ]; then
+        read -p "Destination file exists. Where should I move it? " -ei "${destinationFile}.backup" newPath
+        echo "Moving $destinationFile to $newPath"
+        mv "$destinationFile" "$newPath"
+    fi
+    echo "Linking $sourceFile to $destinationFile"
+    ln -s "$sourceFile" "$destinationFile"
+}
+
+_mkFolder() {
+    folder="$1"
+    echo "Checking for folder $folder"
+    if [ -f "$folder" ]; then
+        read -p "File exists at destination. Where should I move it? " -ei "${folder}.backup" newPath
+        echo "Moving $folder to $newPath"
+        mv "$folder" "$newPath"
+    fi
+    [ -d "$folder" ] && return
+    echo "Creating $folder"
+    mkdir "$folder"
+}
+
+
+###########
+## Tasks ##
+###########
 
 test() {
     create_test_symlinks
@@ -15,7 +56,7 @@ EOF
     echo -en "\033[0;0m"
     env -i \
         TERM=xterm \
-        HOME=$HOME \
+        HOME=$(pwd) \
     /bin/bash --rcfile .bash_profile
     echo -en "\033[0;32m"
     cat <<EOF
@@ -29,34 +70,34 @@ EOF
 }
 
 create_test_symlinks() {
-    for symlink in $SYMLINKS; do
+    for symlink in $TEST_SYMLINKS; do
         target=${symlink:1}
         [ ! -L $symlink ] && [ -e $target ] && ln -s $target $symlink
     done
 }
 
 delete_test_symlinks() {
-    for symlink in $SYMLINKS; do
+    for symlink in $TEST_SYMLINKS; do
         [ -L $symlink ] && rm $symlink
     done
 }
 
 install() {
-    repo="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-    cd "$HOME"
-    for symlink in $SYMLINKS; do
-        echo -n "Creating link for $symlink... "
-        if [ -f $symlink ]; then
-            echo "File already exists. Moving to $symlink.backup"
-            mv $symlink $symlink.backup
-        fi
-        target="$repo/${symlink:1}"
-        if [ -e "$target" ]; then
-            ln -s "$target" $symlink
-            echo "Link created!"
-        else
-            echo "Target $target does not exist, skipping."
-        fi
+    repo="$(pwd)"
+    echo "Installing dotfiles"
+    echo
+    for file in $INSTALL_FILES; do
+        _linkFile "${repo}/${file}" "${HOME}/.${file}"
+        echo
+    done
+    for directory in $INSTALL_DIRECTORIES; do
+        [ -d "$directory" ] || continue
+        _mkFolder "${HOME}/.${directory}"
+        echo
+        for file in "${directory}/"*; do
+            _linkFile "${repo}/${file}" "${HOME}/.${file}"
+            echo
+        done
     done
 }
 
@@ -78,8 +119,15 @@ uninstall() {
     done
 }
 
+
+#################
+## Task runner ##
+#################
+
+cd $(dirname "$0")
+
 if [ -n "$1" ]; then
-    $1
+    "$@"
 else
     test
 fi
