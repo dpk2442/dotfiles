@@ -17,7 +17,8 @@ _linkFile() {
     fi
     echo "Attempting to link $destinationFile"
     if [ -e "$destinationFile" ]; then
-        read -p "Destination file exists. Where should I move it? " -ei "${destinationFile}.backup" newPath
+        read -p "Destination file exists. Where should I move it? [${destinationFile}.backup] " -e newPath
+        [ -z "$newPath" ] && newPath="${destinationFile}.backup"
         echo "Moving $destinationFile to $newPath"
         mv "$destinationFile" "$newPath"
     fi
@@ -36,6 +37,22 @@ _mkFolder() {
     [ -d "$folder" ] && return
     echo "Creating $folder"
     mkdir "$folder"
+}
+
+_deleteLink() {
+    file="$1"
+    echo "Checking $file"
+    if [ -L "$file" ]; then
+        echo "$file is a symbolic link. Removing."
+        rm "$file"
+        echo "Link removed!"
+        if [ -f "${file}.backup" ]; then
+            echo "Backup file found. Restoring ${file}.backup."
+            mv "${file}.backup" "${file}"
+        fi
+    else
+        echo "No backup file found, and $file isn't a symbolic link. Leaving $file."
+    fi
 }
 
 
@@ -102,20 +119,21 @@ install() {
 }
 
 uninstall() {
-    repo="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-    cd "$HOME"
-    for symlink in $SYMLINKS; do
-        echo -n "Checking $symlink... "
-        if [ -f $symlink.backup ]; then
-            echo "Backup file found. Restoring $symlink.backup."
-            mv $symlink.backup $symlink
-        elif [ -L $symlink ]; then
-            echo "$symlink is a symbolic link. Removing."
-            rm $symlink
-        else
-            echo "No backup file found, and $symlink isn't a symbolic link. Leaving $symlink."
-        fi
-        echo "Link removed!"
+    repo="$(pwd)"
+    echo "Removing dotfiles"
+    echo
+    for file in $INSTALL_FILES; do
+        _deleteLink "${HOME}/.${file}"
+        echo
+    done
+    for directory in $INSTALL_DIRECTORIES; do
+        [ -d "${HOME}/.${directory}" ] || continue
+        for file in "${HOME}/.${directory}/"*; do
+            if [ "$file" -ef "${directory}/$(basename "$file")" ]; then
+                _deleteLink "$file"
+                echo
+            fi
+        done
     done
 }
 
