@@ -1,20 +1,39 @@
+
+# include local configurations, like name and email
 [include]
 	path = .gitconfig-local
 
 [push]
+	# set the push type to simple to only push the current branch
 	default = simple
+
 [alias]
+	
 	st = status
 	man = help
+
+	# a nicely formatted history view
 	hist = log --pretty=format:\"%h %ad | %C(cyan)%d%C(reset) %s [%an]\" --graph --date=short
+	
+	# commands to work with files assumed unchanged
 	assumeunchanged-add = update-index --assume-unchanged
 	assumeunchanged-remove = update-index --no-assume-unchanged
 	assumeunchanged-list = !git ls-files -v | grep '^[[:lower:]]'
+
 	co = checkout
+	
+	# show quick details about a commit, including modified files
 	show-commit = !git --no-pager show --name-only --pretty=oneline
+
+	# show stats about the current diff
 	stat = diff --stat
+
+	# run my custom branch-status script
 	bs = branch-status
+
+	# show the branch topography
 	topo = log --graph --simplify-by-decoration --all --pretty=format:'%d'
+	
 [mergetool]
 	prompt = false
 	keepBackup = false
