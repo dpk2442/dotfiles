@@ -1,0 +1,20 @@
+[include]
+	path = .gitconfig-local
+
+[push]
+	default = simple
+[alias]
+	st = status
+	man = help
+	hist = log --pretty=format:\"%h %ad | %C(cyan)%d%C(reset) %s [%an]\" --graph --date=short
+	assumeunchanged-add = update-index --assume-unchanged
+	assumeunchanged-remove = update-index --no-assume-unchanged
+	assumeunchanged-list = !git ls-files -v | grep '^[[:lower:]]'
+	co = checkout
+	show-commit = !git --no-pager show --name-only --pretty=oneline
+	stat = diff --stat
+	bs = branch-status
+	topo = log --graph --simplify-by-decoration --all --pretty=format:'%d'
+[mergetool]
+	prompt = false
+	keepBackup = false
