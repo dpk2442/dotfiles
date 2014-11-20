@@ -133,14 +133,14 @@ pfind() {
 # Include all additional executable bashrc parts
 if [ -d ~/.bashrc.d ]; then
     for file in ~/.bashrc.d/*; do
-        [ -x $file ] && source $file
+        [ -f $file ] && source $file
     done
 fi
 
 # Include all executable alias definitions
 if [ -d ~/.aliases.d ]; then
     for file in ~/.aliases.d/*; do
-        [ -x $file ] && source $file
+        [ -f $file ] && source $file
     done
 fi
 

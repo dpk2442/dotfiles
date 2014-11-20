@@ -1,7 +1,7 @@
 # Include all executable bash_profile parts for login shell specific configuration
 if [ -d ~/.bash_profile.d ]; then
     for file in ~/.bash_profile.d/*; do
-        [ -x $file ] && source $file
+        [ -f $file ] && source $file
     done
 fi
 
