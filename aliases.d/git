@@ -9,5 +9,6 @@ alias st='git status'
 binaryExists git-branch-status && alias bs='git branch-status'
 alias gitcat='git --no-pager'
 alias gd='git diff'
+alias gdc='git diff --cached'
 
 unset binaryExists
