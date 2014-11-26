@@ -1,11 +1,10 @@
 # If bash is not running interactively, exit
-[[ $- == *i* ]] || exit
+[[ "$-" == *i* ]] || return
 
 # os detection functions
 platform=$(uname)
 isDarwin() { [ "$platform" = "Darwin" ]; }
 isLinux() { [ "$platform" = "Linux" ]; }
-
 
 #############
 ## History ##
