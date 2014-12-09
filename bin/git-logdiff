@@ -1,4 +1,4 @@
 #!/bin/bash
 
 branch=$(git rev-parse --abbrev-ref @{upstream})
-git log HEAD...$branch
+git log "$@" HEAD...$branch
