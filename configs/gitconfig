@@ -12,6 +12,13 @@
 	st = status
 	man = help
 
+	# merge changes from tracked remote branch
+	update = merge --ff-only @{upstream}
+	update-rebase = rebase @{upstream}
+
+	# view log for tracked remote branch
+	log-remote = log @{upstream}
+
 	# a nicely formatted history view
 	hist = log --pretty=format:\"%h %ad | %C(cyan)%d%C(reset) %s [%an]\" --graph --date=short
 	
