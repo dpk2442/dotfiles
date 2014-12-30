@@ -19,6 +19,9 @@
 	# view log for tracked remote branch
 	log-remote = log @{upstream}
 
+	# view commits only reachable from each branch
+	logdiff = log HEAD...@{upstream}
+
 	# a nicely formatted history view
 	hist = log --pretty=format:\"%h %ad | %C(cyan)%d%C(reset) %s [%an]\" --graph --date=short
 	
