@@ -47,3 +47,11 @@
 [mergetool]
 	prompt = false
 	keepBackup = false
+
+# See http://git-scm.com/book/en/v2/Git-Tools-Rerere
+[rerere]
+	enabled = true
+
+# let git attempt to autocorrect spelling mistakes after .5 seconds
+[help]
+	autocorrect = 5
