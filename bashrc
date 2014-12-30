@@ -47,14 +47,29 @@ shortPWD() {
     echo -n $newPWD
 }
 
+# __git_ps1 options as documented in git-prompt.sh
+# Show * for a dirty repository
+export GIT_PS1_SHOWDIRTYSTATE=1
+# Show whether or not stashes exist
+# export GIT_PS1_SHOWSTASHSTATE=1
+# Show whether or not the working directory contains untracked files
+# export GIT_PS1_SHOWUNTRACKEDFILES=1
+# Show whether you are ahead or behind of the upstream repo
+# export GIT_PS1_SHOWUPSTREAM="auto"
+
 git_bash() {
-    if [ "$(git rev-parse --is-inside-work-tree 2> /dev/null)" = "true" ]; then
-        branch="$(git symbolic-ref --short HEAD)"
-        star=""
-        if [ -n "$(git status --porcelain)" ]; then
-                star="*"
+    # Use __git_ps1 if the user has that set up, otherwise use a less sophisticated polyfill
+    if type __git_ps1 1>/dev/null 2>&1; then
+        __git_ps1 " (%s)"
+    else
+        if [ "$(git rev-parse --is-inside-work-tree 2> /dev/null)" = "true" ]; then
+            branch="$(git symbolic-ref --short HEAD)"
+            star=""
+            if [ -n "$(git status --porcelain)" ]; then
+                    star="*"
+            fi
+            echo " ($branch $star)";
         fi
-        echo " ($branch$star)";
     fi
 }
 
