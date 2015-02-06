@@ -127,9 +127,6 @@ export EDITOR=vim
 # Copy current working directory to clipboard
 alias copypwd="pwd | tr --delete '\n' | pbcopy"
 
-# Use rsync for copying files
-alias rsynccp='rsync -a --stats --progress'
-
 # Search for processes
 psgrep() {
     ps aux | grep "[${1:0:1}]${1:1}"
