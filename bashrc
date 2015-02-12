@@ -6,6 +6,19 @@ platform=$(uname)
 isDarwin() { [ "$platform" = "Darwin" ]; }
 isLinux() { [ "$platform" = "Linux" ]; }
 
+
+##########################
+## Environment includes ##
+##########################
+
+# Include all environment parts
+if [ -d ~/.env.d ]; then
+    for file in ~/.env.d/*; do
+        [ -f $file ] && source $file
+    done
+fi
+
+
 #############
 ## History ##
 #############
