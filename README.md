@@ -1,8 +1,8 @@
 # dpk2442's dotfiles
 
-This is a repository for my Bash configuration files.
+This is a repository for my Bash configuration files, and some scripts that I find useful.
 
-It also contains some scripts that I find useful.
+It is organized into two branches. The master branch is where all development happens. The server branch exists to remove some files that are most likely only needed for workstations, not servers. When changes are made to master, the master branch will be rebased onto the server branch and force pushed. **NO WORK SHOULD BE BASED OFF OF THIS BRANCH.**
 
 ## Installation
 
