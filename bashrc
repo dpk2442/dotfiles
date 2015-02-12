@@ -154,14 +154,14 @@ pfind() {
 ## Other includes ##
 ####################
 
-# Include all additional executable bashrc parts
+# Include all executable bashrc parts
 if [ -d ~/.bashrc.d ]; then
     for file in ~/.bashrc.d/*; do
         [ -f $file ] && source $file
     done
 fi
 
-# Include all executable alias definitions
+# Include all alias definitions
 if [ -d ~/.aliases.d ]; then
     for file in ~/.aliases.d/*; do
         [ -f $file ] && source $file
