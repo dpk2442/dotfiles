@@ -93,7 +93,7 @@ git_bash() {
     fi
 }
 
-export PS1="\\[\033[0;32m\\]\u@\h:\$(shortPWD)\[\033[0;34m\]\$(git_bash)\[\033[0;32m\]\$ \\[\033[0;36m\\]"
+export PS1="\\[\033[0;32m\\]\u@\h:\$(shortPWD)\\[\033[0;34m\\]\$(git_bash)\\[\033[0;32m\\]\$ \\[\033[0;36m\\]"
 trap 'echo -ne "\033[0;0m"' DEBUG
 
 
