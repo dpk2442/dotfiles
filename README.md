@@ -10,7 +10,7 @@ Clone the repository, and run `./tasks install`.
 
 If you care what it does:
 
-This will create a few symlinks. First, it will move any old `.bash_profile` or `.bashrc` out of the way, and then create symlinks to those files in the repository. Next it will attempt to create `.bash_profile.d`, `.bashrc.d`, and `.aliases.d`, if they exist in the repository. If any of those directories already exist, the exisiting directories will be used. If they are files, you will be prompted to move them. Once those directories are in place, any files in the repository that live in those folders will be symlinked as well.
+This will create a few symlinks. First, it will move any old `.bash_profile` or `.bashrc` out of the way, and then create symlinks to those files in the repository. Next it will attempt to create `.bash_profile.d`, `.bashrc.d`, and `.aliases.d`, if they exist in the repository. If any of those directories already exist, the existing directories will be used. If they are files, you will be prompted to move them. Once those directories are in place, any files in the repository that live in those folders will be symlinked as well.
 
 This script will also create a `bin` folder in your home folder, if one doesn't already exist, and symlink all files in the repository to that folder.
 
