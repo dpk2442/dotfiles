@@ -52,10 +52,17 @@ shopt -s globstar 1>/dev/null 2>&1 # Ignore errors. This option may not be prese
 ## PS1 ##
 #########
 
+# shortPWD will shorten the current working directory to an ellipsis followed by the two
+# directories directly above it in the folder hierarchy. By default, it uses the unicode
+# ellipsis character, but you can specify $SHORT_PWD_NO_UNICODE=1 to change that to
+# three ascii dots.
+
+ellipsis='\xe2\x80\xa6'
+[ -n "$SHORT_PWD_NO_UNICODE" ] && ellipsis='...'
 shortPWD() {
     newPWD=${PWD/$HOME/\~}
     if [ "$(echo -n $newPWD | wc -c | tr -d " ")" -gt 30 ]; then
-       newPWD=$(echo -n $newPWD | awk -F '/' '{print "\xe2\x80\xa6/" $(NF-1) "/" $(NF)}')
+       newPWD=$(echo -n $newPWD | awk -F '/' '{print "'$ellipsis'/" $(NF-1) "/" $(NF)}')
     fi
     echo -n $newPWD
 }
