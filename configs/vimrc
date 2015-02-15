@@ -1,0 +1,77 @@
+" Basic settings
+set nocompatible
+set number
+syntax on
+
+" Search settings
+set hlsearch    " highlight searches
+set incsearch   " do incremental searching
+set showmatch   " jump to matches when entering regexp
+set ignorecase  " ignore case when searching
+set smartcase   " no ignorecase if Uppercase char present
+
+" Remove annoying backup files
+set nobackup
+set noswapfile
+
+" Increase undo limit
+set undolevels=200
+
+" Add a line to the current cursor position
+set cursorline
+
+" Switch to 4 space indentation
+function! UseSpacesToIndent()
+  set nopaste
+  set autoindent
+  set softtabstop=4
+  set expandtab
+  set tabstop=4
+  set shiftwidth=4
+endfunction
+command! UseSpacesToIndent call UseSpacesToIndent()
+
+" Set default indentation to 4 spaces
+call UseSpacesToIndent()
+
+" Switch to tab indentation
+function! UseTabsToIndent()
+  set nopaste
+  set autoindent
+  set softtabstop=0
+  set noexpandtab
+  set tabstop=4
+  set shiftwidth=4
+endfunction
+command! UseTabsToIndent call UseTabsToIndent()
+
+" Fix backspace
+set backspace=indent,eol,start
+
+" Show characters for leading tabs and trailing whitespace
+set list listchars=tab:→\ ,trail:·
+
+" Setup a nice status line
+set laststatus=2               " Always display a statusline
+set statusline=%<\             " begins with whitespace
+set statusline+=%t             " filename
+set statusline+=\              " whitespace
+set statusline+=%m             " modified
+set statusline+=%r             " read-only
+set statusline+=%y             " filetype
+set statusline+=%w             " preview
+set statusline+=%=             " split
+set statusline+=Col:\ \%c      " column number
+set statusline+=\              " whitespace
+set statusline+=Line:\ \%l\/\%L " line number/total
+set statusline+=\              " ends with whitespace
+
+" Reload vimrc
+map <Leader>r :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo '\nvimrc reloaded'"<CR>
+
+" Switch tabs
+nmap <Leader>n :tabn<CR>
+nmap <Leader>p :tabp<CR>
+
+" Mouse
+set mouse=a
