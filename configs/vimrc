@@ -48,9 +48,6 @@ command! UseTabsToIndent call UseTabsToIndent()
 " Fix backspace
 set backspace=indent,eol,start
 
-" Show characters for leading tabs and trailing whitespace
-set list listchars=tab:→\ ,trail:·
-
 " Setup a nice status line
 set laststatus=2               " Always display a statusline
 set statusline=%<\             " begins with whitespace
