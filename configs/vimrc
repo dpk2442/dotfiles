@@ -64,7 +64,7 @@ set statusline+=Line:\ \%l\/\%L " line number/total
 set statusline+=\              " ends with whitespace
 
 " Reload vimrc
-map <leader>r :source ~/.vimrc<cr>:filetype detect<cr>:exe ":echo '\nvimrc reloaded'"<cr>
+map <leader>r :source ~/.vimrc<cr>:filetype detect<cr>:echo 'vimrc reloaded'<cr>
 
 " Switch tabs
 nmap <leader>n :tabn<cr>
