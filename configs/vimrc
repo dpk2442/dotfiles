@@ -64,11 +64,11 @@ set statusline+=Line:\ \%l\/\%L " line number/total
 set statusline+=\              " ends with whitespace
 
 " Reload vimrc
-map <Leader>r :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo '\nvimrc reloaded'"<CR>
+map <leader>r :source ~/.vimrc<cr>:filetype detect<cr>:exe ":echo '\nvimrc reloaded'"<cr>
 
 " Switch tabs
-nmap <Leader>n :tabn<CR>
-nmap <Leader>p :tabp<CR>
+nmap <leader>n :tabn<cr>
+nmap <leader>p :tabp<cr>
 
 " Mouse
 set mouse=a
