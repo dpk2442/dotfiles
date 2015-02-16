@@ -72,3 +72,14 @@ nmap <leader>p :tabp<cr>
 
 " Mouse
 set mouse=a
+
+function! MouseToggle()
+    if &mouse == "a"
+        setlocal mouse=
+        return 'mouse mode disabled'
+    else
+        setlocal mouse=a
+        return 'mouse mode enabled'
+    endif
+endfunction
+nnoremap <leader>m :echo MouseToggle()<cr>
