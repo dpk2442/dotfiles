@@ -3,6 +3,10 @@ set nocompatible
 set number
 syntax on
 
+" Visual settings
+colorscheme desert
+set guioptions-=T
+
 " Search settings
 set hlsearch    " highlight searches
 set incsearch   " do incremental searching
