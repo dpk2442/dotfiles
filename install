@@ -1,0 +1,96 @@
+#!/usr/bin/env python3
+
+## Imports
+import installer.components
+
+import importlib
+import inspect
+import pkgutil
+import sys
+
+
+## Helpers
+
+def getAllComponents():
+    """Get a list of all components available for installation."""
+    return [component for _, component, _ in pkgutil.iter_modules(['installer/components'])]
+
+
+## Help
+
+def showHelp():
+    """Display the help message."""
+    print("""\
+Usage: ./install [-h] [-c] [-n] component...
+    -h  --help               Display this help message and exit
+    -c  --components         List all available components
+    -n  --non-interactive    Run the installer with no prompts
+    components...            One or more components to install""")
+
+def listComponents():
+    """Display the components available."""
+    components = getAllComponents()
+    print("Available components:\n\t", end="")
+    print(*components, sep="\n\t")
+
+
+## Install
+
+def install(components, interactive):
+    """Install the given components, interactively if specified."""
+    for component in components:
+        componentModule = None
+        try:
+            componentModule = importlib.import_module("installer.components.{}".format(component))
+        except ImportError:
+            print("Error loading component {}, skipping. Are you sure it exists?".format(component))
+            continue
+        if not hasattr(componentModule, "install"):
+            print("Component {} does not have an install function, skipping.".format(component))
+            continue
+        if len(inspect.getargspec(componentModule.install).args) != 1:
+            print("Component {} has an invalid install function, skipping.".format(component))
+            continue
+        componentModule.install(interactive)
+
+def installAll(interactive):
+    """Install all the available components."""
+    if interactive:
+        doAll = input("Install all components? [Y/n] ").lower()
+        if doAll.startswith("y") or doAll == "":
+            install(getAllComponents(), interactive)
+    else:
+        install(getAllComponents(), interactive)
+
+
+## Main
+
+def main():
+    argv = sys.argv[1:]
+    interactive = True
+
+    if len(argv) == 0:
+        installAll(interactive)
+        exit()
+
+    if "-h" in argv or "--help" in argv:
+        showHelp()
+        exit()
+    elif "-c" in argv or "--components" in argv:
+        listComponents()
+        exit()
+
+    if argv[0] == "-n" or argv[0] == "--non-interactive":
+        interactive = False
+        argv = argv[1:]
+
+    if len(argv) == 0:
+        installAll(interactive)
+        exit()
+    else:
+        install(argv, interactive)
+        exit()
+
+
+if __name__ == "__main__":
+    main()

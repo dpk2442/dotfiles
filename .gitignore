@@ -7,3 +7,6 @@
 
 # ignore files from testing environment
 .bash_history
+
+# ignore python cache
+__pycache__
