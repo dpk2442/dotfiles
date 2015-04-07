@@ -4,6 +4,16 @@ This is a repository for my Bash configuration files, some scripts that I find u
 
 ## Installation
 
+Right now, there are two ways to install.
+
+### Method 1
+
+Clone the repository, and run `./install -h` for more information on how to use the installer.
+
+### Method 2
+
+This method is outdated, and will be removed.
+
 Clone the repository, and run `./tasks install`.
 
 If you care what it does:
@@ -13,6 +23,8 @@ This will create a few symlinks. First, it will move any old `.bash_profile` or 
 This script will also create a `bin` folder in your home folder, if one doesn't already exist, and symlink all files in the repository to that folder.
 
 ## Uninstall
+
+This is still the only way to uninstall, and it will still uninstall the files listed in the description below. However it will not remove any files beyond that. If you want to remove other files, like `.tmux.conf` or `.gitconfig`, for example, you will need to do so manually.
 
 You can run `./tasks uninstall` to remove the symlinks.
 
