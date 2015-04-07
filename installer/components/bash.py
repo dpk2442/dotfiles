@@ -10,15 +10,11 @@ DOTFILES = {
     "bash_profile": ".bash_profile"
 }
 
-DIRS = [".bashrc.d", ".aliases.d"]
+DIRS = [".bashrc.d"]
 
 BASHRC_D = {
     "bashrc.d/darwin": ".bashrc.d/darwin",
     "bashrc.d/linux": ".bashrc.d/linux"
-}
-
-ALIASES_D = {
-    "aliases.d/git": ".aliases.d/git"
 }
 
 def install(interactive):
@@ -28,7 +24,3 @@ def install(interactive):
             utils.linkFileDict(BASHRC_D, interactive)
         else:
             print("Could not create .bashrc.d folder, skipping the installation of those scripts.")
-        if dirSuccess[1]:
-            utils.linkFileDict(ALIASES_D, interactive)
-        else:
-            print("Could not create .aliases.d folder, skipping the installation of those scripts.")
