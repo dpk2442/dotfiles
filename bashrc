@@ -127,6 +127,9 @@ alias ll='ls -alhF'
 # Use rsync to copy files with a progress bar
 alias rsynccp='rsync -a --stats --progress'
 
+# Make df nicer to read
+alias df='df -h'
+
 # pman - view man pages visually
 if isLinux; then
     pman() {
