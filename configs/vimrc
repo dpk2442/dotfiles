@@ -3,6 +3,10 @@ set nocompatible
 set number
 syntax on
 
+" Make views automatic
+autocmd BufWritePre,BufWinLeave *.* mkview
+autocmd BufWinEnter *.* silent loadview
+
 " Visual settings
 colorscheme desert
 set guioptions-=T
