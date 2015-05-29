@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if [ -z "$1" ]; then
+    echo "Usage: git fetch-repeat remote [interval]"
+    exit
+fi
+
+REMOTE="$1"
+FETCH_INTERVAL="$2"
+if [ -z "$FETCH_INTERVAL" ]; then
+    FETCH_INTERVAL=60
+fi
+
+while true; do
+    git fetch $REMOTE
+    sleep $FETCH_INTERVAL
+done
