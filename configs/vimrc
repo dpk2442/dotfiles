@@ -22,6 +22,9 @@ set smartcase   " no ignorecase if Uppercase char present
 set nobackup
 set noswapfile
 
+" Stop writing backup file to prevent writing twice on save
+set nowritebackup
+
 " Increase undo limit
 set undolevels=200
 
