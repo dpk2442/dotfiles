@@ -1,0 +1,64 @@
+#!/usr/bin/env python3
+
+import os;
+import subprocess;
+import sys;
+
+class Directory(object):
+    def __init__(self, name, isRoot=False):
+        self.name = name
+        self.isRoot = isRoot
+        self.childList = []
+        self.childDict = {}
+    def addChild(self, childName, child):
+        self.childList.append(childName)
+        self.childDict[childName] = child
+    def getChild(self, childName):
+        if childName in self.childDict:
+            return self.childDict[childName]
+        return None
+    def display(self):
+        ret = ["." if self.isRoot else self.name]
+        numChildren = len(self.childList)
+        for (count, childName) in enumerate(self.childList):
+            childStr = self.childDict[childName].display()
+            if (count + 1) == numChildren:
+                ret.append("└── " + childStr.pop(0))
+            else:
+                ret.append("├── " + childStr.pop(0))
+            for line in childStr:
+                if (count + 1) == numChildren:
+                    ret.append("    " + line)
+                else:
+                    ret.append("│   " + line)
+        return ret
+        
+class File(object):
+    def __init__(self, name):
+        self.name = name
+    def display(self):
+        return [self.name]
+
+cmd = ['git', 'ls-files']
+cmd += sys.argv[1:]
+files = subprocess.Popen(cmd, stdout=subprocess.PIPE).communicate()[0]
+files = files.decode("utf-8").split("\n")[0:-1]
+
+rootDir = Directory(None, True)
+
+for file in files:
+    (parentPath, file) = os.path.split(file)
+    parentDirs = parentPath.split('/')
+    curDir = rootDir
+    if parentPath:
+        for parentDir in parentDirs:
+            parentDirObj = curDir.getChild(parentDir)
+            if parentDirObj:
+                curDir = parentDirObj
+            else:
+                parentDirObj = Directory(parentDir)
+                curDir.addChild(parentDir, parentDirObj)
+                curDir = parentDirObj
+    curDir.addChild(file, File(file))
+
+print("\n".join(rootDir.display()))
