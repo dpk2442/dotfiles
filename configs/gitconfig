@@ -16,8 +16,8 @@
 	update = merge --ff-only @{upstream}
 	update-rebase = rebase @{upstream}
 
-    # shortened version of the log
-    slog = log --pretty=format:\"%C(yellow)%h%C(reset) - %C(cyan)%an <%ae>%C(reset) : %s\"
+	# shortened version of the log
+	slog = log --pretty=format:\"%C(yellow)%h%C(reset) - %C(cyan)%an <%ae>%C(reset) : %s\" -n 10
 
 	# view log for tracked remote branch
 	log-remote = log @{upstream}
