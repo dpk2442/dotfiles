@@ -1,8 +1,3 @@
-
-# include local configurations, like name and email
-[include]
-	path = .gitconfig-local
-
 [push]
 	# set the push type to simple to only push the current branch
 	default = simple
