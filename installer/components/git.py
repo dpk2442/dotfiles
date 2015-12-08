@@ -5,10 +5,6 @@ Git configuration component
 
 from installer import utils
 
-GITCONFIG = {
-    "configs/gitconfig": ".gitconfig"
-}
-
 DIRS = [".aliases.d"]
 
 GIT_ALIASES = {
@@ -16,7 +12,6 @@ GIT_ALIASES = {
 }
 
 def install(interactive):
-    utils.linkFileDict(GITCONFIG, interactive)
     dirSuccess = utils.mkDirs(DIRS)
     if dirSuccess[0]:
         utils.linkFileDict(GIT_ALIASES, interactive)
