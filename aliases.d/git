@@ -11,5 +11,6 @@ alias gitcat='git --no-pager'
 alias gd='git diff'
 alias gdc='git diff --cached'
 alias gds='git diff --stat'
+alias g='git'
 
 unset binaryExists
