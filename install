@@ -48,7 +48,7 @@ def install(components, interactive):
         if not hasattr(componentModule, "install"):
             print("Component {} does not have an install function, skipping.".format(component))
             continue
-        if len(inspect.getargspec(componentModule.install).args) != 1:
+        if len(inspect.getfullargspec(componentModule.install).args) != 1:
             print("Component {} has an invalid install function, skipping.".format(component))
             continue
         componentModule.install(interactive)
